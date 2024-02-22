@@ -1,5 +1,5 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.12'
+- '11.0'
 c_compiler:
 - clang
 c_compiler_version:
@@ -11,10 +11,10 @@ channel_targets:
 libgit2:
 - '1.7'
 macos_machine:
-- x86_64-apple-darwin13.4.0
+- arm64-apple-darwin20.0.0
 rust_compiler:
 - rust
 target_platform:
-- osx-64
+- osx-arm64
 zlib:
 - '1.2'
