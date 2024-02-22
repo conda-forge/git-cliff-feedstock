@@ -1,4 +1,4 @@
-{% set version = "2.0.2" %}
+{% set version = "2.0.3" %}
 
 package:
   name: git-cliff
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/orhun/git-cliff/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: ab29fbda532bec2a344d99f39b7998063c576efee92a1bee083c6fba5f52e4ef
+  sha256: f9ef0bcc33d91f3e3e4b511f81cc0b850da126486756dd84c8672b35ca545243
 
 build:
   number: 0
@@ -30,7 +30,7 @@ about:
   summary: "A highly customizable changelog generator"
   description: "A highly customizable Changelog Generator that follows Conventional Commit specifications ⛰️"
   license: MIT OR Apache-2.0
-  license_file: 
+  license_file:
     - LICENSE-MIT
     - LICENSE-APACHE
     - THIRDPARTY.yml
