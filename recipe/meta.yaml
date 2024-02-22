@@ -20,7 +20,7 @@ requirements:
 
   host:
     - libgit2
-    - libiconv # [osx and arm64]
+    - libiconv  # [osx and arm64]
 
 test:
   commands:
