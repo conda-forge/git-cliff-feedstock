@@ -10,6 +10,7 @@ source:
 
 build:
   number: 0
+  skip: true  # [not (osx and arm64)]
 
 requirements:
   build:
