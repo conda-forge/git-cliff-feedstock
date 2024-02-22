@@ -1,5 +1,5 @@
 set -ex
-
+export LIBGIT2_NO_VENDOR=true
 cargo-bundle-licenses --format yaml --output ${SRC_DIR}/THIRDPARTY.yml
 cargo install --path git-cliff --bins --root "${PREFIX}" --locked
 
