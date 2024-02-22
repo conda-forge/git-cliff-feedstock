@@ -16,3 +16,5 @@ rust_compiler:
 - rust
 target_platform:
 - linux-ppc64le
+zlib:
+- '1.2'
