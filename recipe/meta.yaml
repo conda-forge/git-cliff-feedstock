@@ -1,4 +1,4 @@
-{% set version = "2.0.3" %}
+{% set version = "2.0.4" %}
 
 package:
   name: git-cliff
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/orhun/git-cliff/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: f9ef0bcc33d91f3e3e4b511f81cc0b850da126486756dd84c8672b35ca545243
+  sha256: 49c26101ce1f834c1149fd7107e6cb774ea38410afe9cd5c8f35e0cdad417928
 
 build:
   number: 0
