@@ -2,14 +2,12 @@ c_compiler:
 - vs2019
 c_stdlib:
 - vs
-c_stdlib_version:
-- '2019'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 libgit2:
-- '1.7'
+- '1.8'
 rust_compiler:
 - rust
 target_platform:
