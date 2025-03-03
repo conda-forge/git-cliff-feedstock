@@ -26,11 +26,14 @@ build:
           - rm $PREFIX/.crates.toml
       - if: win
         then:
-          - set LIBGIT2_NO_VENDOR="true"
+          # - set LIBGIT2_NO_VENDOR="true"
+          # Explicitly set LIB and LIBPATH for the linker to find libssh2.lib
+          # - set LIB=%PREFIX%\Library\lib;%LIB%
+          # - set LIBPATH=%PREFIX%\Library\lib;%LIBPATH%
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
-          - cargo install --path git-cliff --bins --root %PREFIX% --locked || exit 1
-          - del %PREFIX%\.crates2.json
-          - del %PREFIX%\.crates.toml
+          - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
+          - del %LIBRARY_PREFIX%\.crates2.json
+          - del %LIBRARY_PREFIX%\.crates.toml
 
 requirements:
   build:
