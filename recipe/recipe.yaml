@@ -1,18 +1,31 @@
 schema_version: 1
 
 context:
-  version: 2.6.1
+  name: git-cliff
+  version: 2.8.0
 
 package:
-  name: git-cliff
+  name: ${{ name }}
   version: ${{ version }}
 
 source:
   url: https://github.com/orhun/git-cliff/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 96d2759bb276bfddf4f6653a06afe2982d0bdc9678a5d2cb3880685a681a8a3e
+  sha256: dfcf7b7d903c6479e58c8e7594364d67ce59e3e50351b3277eb33482a783418d
 
 build:
-  number: 1
+  number: 0
+  script:
+    content:
+      - if: unix
+        then:
+          - export LIBGIT2_NO_VENDOR="true"
+          - export PKG_CONFIG="$BUILD_PREFIX/bin/pkg-config"
+          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+          - cargo install --path git-cliff --bins --root "${PREFIX}" --locked
+      - if: win
+        then:
+          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
+          - cargo install --path git-cliff --bins --root %PREFIX% --locked || exit 1
 
 requirements:
   build:
@@ -30,6 +43,9 @@ requirements:
 tests:
   - script:
       - git-cliff --help
+  - package_contents:
+      bin:
+        - git-cliff
 
 about:
   summary: A highly customizable changelog generator
