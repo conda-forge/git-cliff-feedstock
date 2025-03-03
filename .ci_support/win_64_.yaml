@@ -8,6 +8,8 @@ channel_targets:
 - conda-forge main
 libgit2:
 - '1.9'
+libssh2:
+- '1'
 rust_compiler:
 - rust
 target_platform:
