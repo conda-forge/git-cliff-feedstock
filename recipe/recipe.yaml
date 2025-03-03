@@ -26,7 +26,7 @@ build:
           - rm $PREFIX/.crates.toml
       - if: win
         then:
-          # - set LIBGIT2_NO_VENDOR="true"
+          - set LIBGIT2_NO_VENDOR="true"
           # Explicitly set LIB and LIBPATH for the linker to find libssh2.lib
           # - set LIB=%PREFIX%\Library\lib;%LIB%
           # - set LIBPATH=%PREFIX%\Library\lib;%LIBPATH%
