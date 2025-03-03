@@ -3,7 +3,7 @@ About git-cliff-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/git-cliff-feedstock/blob/main/LICENSE.txt)
 
-Home: https://git-cliff.org
+Home: https://git-cliff.org/
 
 Package license: MIT OR Apache-2.0
 
@@ -19,14 +19,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/conda-forge/git-cliff-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/conda-forge/git-cliff-feedstock/main.svg?label=Linux">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
