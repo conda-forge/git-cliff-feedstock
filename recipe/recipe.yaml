@@ -22,10 +22,14 @@ build:
           - export PKG_CONFIG="$BUILD_PREFIX/bin/pkg-config"
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
           - cargo install --path git-cliff --bins --root "${PREFIX}" --locked
+          - rm $PREFIX/.crates2.json
+          - rm $PREFIX/.crates.toml
       - if: win
         then:
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %PREFIX% --locked || exit 1
+          - del %PREFIX%\.crates2.json
+          - del %PREFIX%\.crates.toml
 
 requirements:
   build:
@@ -36,6 +40,7 @@ requirements:
     - cargo-bundle-licenses
   host:
     - libgit2
+    - libssh2
     # to build against libgit2 we also need the pkgconfig files
     # for zlib
     - zlib
@@ -46,6 +51,8 @@ tests:
   - package_contents:
       bin:
         - git-cliff
+        - git-cliff-completions
+        - git-cliff-mangen
 
 about:
   summary: A highly customizable changelog generator
