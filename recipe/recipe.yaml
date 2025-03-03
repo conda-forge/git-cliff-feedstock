@@ -26,6 +26,7 @@ build:
           - rm $PREFIX/.crates.toml
       - if: win
         then:
+          - set LIBGIT2_NO_VENDOR="true"
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %PREFIX% --locked || exit 1
           - del %PREFIX%\.crates2.json
@@ -38,6 +39,7 @@ requirements:
     - ${{ stdlib("c") }}
     - pkg-config
     - cargo-bundle-licenses
+    - ${{ "libssh2" if win }}
   host:
     - libgit2
     - libssh2
