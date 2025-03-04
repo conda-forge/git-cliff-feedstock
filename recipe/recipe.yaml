@@ -31,6 +31,8 @@ build:
           - echo %LIBRARY_PREFIX%
           - echo %LIBPATH%
           - dir %PREFIX%\Library\lib
+          - set "LIBPATH=%PREFIX%/Library/lib;%LIBPATH%"
+          - set "PATH=%PREFIX%/Library/bin;%PATH%"
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json
