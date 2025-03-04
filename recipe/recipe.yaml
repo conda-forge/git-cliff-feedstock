@@ -27,10 +27,7 @@ build:
       - if: win
         then:
           - set LIBGIT2_NO_VENDOR="true"
-          # Explicitly set LIB and LIBPATH for the linker to find libssh2.lib
-          - set LIB=%PREFIX%\Library\lib;%LIB%
-          - set LIBPATH=%PREFIX%\Library\lib;%LIBPATH%
-          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
+          # - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json
           - del %LIBRARY_PREFIX%\.crates.toml
@@ -43,6 +40,7 @@ requirements:
     - pkg-config
     - cargo-bundle-licenses
     - ${{ "libssh2" if win }}
+    - ${{ "libgit2" if win }}
   host:
     - libgit2
     - libssh2
