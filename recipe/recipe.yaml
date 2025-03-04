@@ -27,12 +27,10 @@ build:
       - if: win
         then:
           - set LIBGIT2_NO_VENDOR="true"
-          - echo "Current Directory %CD%"
-          - echo "PREFIX Environment Variable %PREFIX%"
-          - echo "LIBRARY_PREFIX Environment Variable %LIBRARY_PREFIX%"
-          - echo "LIBPATH Environment Variable %LIBPATH%"
-          - echo "Listing contents of %PREFIX%/Library/lib:"
-          - dir %PREFIX%/Library/lib
+          - echo %PREFIX%
+          - echo %LIBRARY_PREFIX%
+          - echo %LIBPATH%
+          - dir %PREFIX%\Library\lib
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json
