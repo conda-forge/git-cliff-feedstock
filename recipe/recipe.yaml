@@ -28,7 +28,7 @@ build:
       - if: win
         then:
           - set LIBGIT2_NO_VENDOR="true"
-          # - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
+          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json
           - del %LIBRARY_PREFIX%\.crates.toml
