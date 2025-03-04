@@ -1,0 +1,75 @@
+schema_version: 1
+
+context:
+  name: git-cliff
+  version: 2.8.0
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/orhun/git-cliff/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: dfcf7b7d903c6479e58c8e7594364d67ce59e3e50351b3277eb33482a783418d
+
+build:
+  number: 0
+  skip: win # disable for now due to `fatal error LNK1181: cannot open input file 'ssh2.lib'`
+  script:
+    content:
+      - if: unix
+        then:
+          - export LIBGIT2_NO_VENDOR="true"
+          - export PKG_CONFIG="$BUILD_PREFIX/bin/pkg-config"
+          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+          - cargo install --path git-cliff --bins --root "${PREFIX}" --locked
+          - rm $PREFIX/.crates2.json
+          - rm $PREFIX/.crates.toml
+      - if: win
+        then:
+          - set LIBGIT2_NO_VENDOR="true"
+          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
+          - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
+          - del %LIBRARY_PREFIX%\.crates2.json
+          - del %LIBRARY_PREFIX%\.crates.toml
+
+requirements:
+  build:
+    - ${{ compiler('rust') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - pkg-config
+    - cargo-bundle-licenses
+    - ${{ "libssh2" if win }}
+    - ${{ "libgit2" if win }}
+  host:
+    - libgit2
+    - libssh2
+    # to build against libgit2 we also need the pkgconfig files
+    # for zlib
+    - zlib
+
+tests:
+  - script:
+      - git-cliff --help
+  - package_contents:
+      bin:
+        - git-cliff
+        - git-cliff-completions
+        - git-cliff-mangen
+
+about:
+  summary: A highly customizable changelog generator
+  description: A highly customizable Changelog Generator that follows Conventional Commit specifications ⛰️
+  license: MIT OR Apache-2.0
+  license_file:
+    - LICENSE-MIT
+    - LICENSE-APACHE
+    - THIRDPARTY.yml
+  homepage: https://git-cliff.org
+  repository: https://github.com/orhun/git-cliff
+  documentation: https://git-cliff.org/docs/
+
+extra:
+  recipe-maintainers:
+    - orhun
