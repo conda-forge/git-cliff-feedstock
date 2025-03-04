@@ -1,2 +1,2 @@
-c_compiler:
-  - vs2022 # [win and x86_64]
+rust_compiler_version:
+  - 1.83.0
