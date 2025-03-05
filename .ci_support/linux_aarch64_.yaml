@@ -20,8 +20,6 @@ libssh2:
 - '1'
 rust_compiler:
 - rust
-rust_compiler_version:
-- 1.83.0
 target_platform:
 - linux-aarch64
 zlib:
