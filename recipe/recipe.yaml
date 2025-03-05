@@ -27,12 +27,8 @@ build:
       - if: win
         then:
           - set LIBGIT2_NO_VENDOR="true"
-          - echo %PREFIX%
-          - echo %LIBRARY_PREFIX%
-          - echo %LIBPATH%
           - dir %PREFIX%\Library\lib
-          - set "LIBPATH=%PREFIX%/Library/lib;%LIBPATH%"
-          - set "PATH=%PREFIX%/Library/bin;%PATH%"
+          - copy "%PREFIX%\Library\lib\libssh2.lib" "%PREFIX%\Library\lib\ssh2.lib" || exit 1
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json
