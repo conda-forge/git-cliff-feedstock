@@ -27,12 +27,11 @@ build:
       - if: win
         then:
           - set LIBGIT2_NO_VENDOR="true"
-          - dir %PREFIX%\Library\lib
-          - copy "%PREFIX%\Library\lib\libssh2.lib" "%PREFIX%\Library\lib\ssh2.lib" || exit 1
+          - set "RUSTFLAGS=-l libssh2 %RUSTFLAGS%" # Tell linker to use libssh2.lib and not ssh2.lib
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
-          - del %LIBRARY_PREFIX%\.crates2.json
-          - del %LIBRARY_PREFIX%\.crates.toml
+          - del %LIBRARY_PREFIX%\.crates2.json || exit 1
+          - del %LIBRARY_PREFIX%\.crates.toml || exit 1
 
 requirements:
   build:
@@ -41,8 +40,6 @@ requirements:
     - ${{ stdlib("c") }}
     - pkg-config
     - cargo-bundle-licenses
-    - ${{ "libssh2" if win }}
-    - ${{ "libgit2" if win }}
   host:
     - libgit2
     - libssh2
