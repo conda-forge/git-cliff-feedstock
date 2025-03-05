@@ -28,7 +28,8 @@ build:
         then:
           - set LIBGIT2_NO_VENDOR="true"
           - dir %PREFIX%\Library\lib
-          - set "RUSTFLAGS=-l:libssh2 %RUSTFLAGS%" # Tell linker to use libssh2.lib and not ssh2.lib
+          # Tell linker to use libssh2.lib and not ssh2.lib
+          - set "RUSTFLAGS=-l libssh2 %RUSTFLAGS%"
           - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
           - cargo install --verbose --path git-cliff --bins --root %LIBRARY_PREFIX% --locked -j 4 || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json || exit 1
