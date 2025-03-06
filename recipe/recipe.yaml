@@ -13,7 +13,7 @@ source:
   sha256: dfcf7b7d903c6479e58c8e7594364d67ce59e3e50351b3277eb33482a783418d
 
 build:
-  number: 1
+  number: 10
   script:
     content:
       - if: unix
@@ -39,6 +39,7 @@ build:
           - cargo install --verbose --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
           - del %LIBRARY_PREFIX%\.crates2.json || exit 1
           - del %LIBRARY_PREFIX%\.crates.toml || exit 1
+          - del %PREFIX%\Library\lib\ssh2.lib || exit 1
 
 requirements:
   build:
