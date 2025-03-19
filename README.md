@@ -206,6 +206,3 @@ Feedstock Maintainers
 * [@hadim](https://github.com/hadim/)
 * [@orhun](https://github.com/orhun/)
 
-
-<!-- dummy commit to enable rerendering -->
-
