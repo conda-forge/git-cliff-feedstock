@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: git-cliff
-  version: "2.14.1"
+  version: "2.14.2"
 
 package:
   name: ${{ name }}
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://github.com/orhun/git-cliff/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 22f01e016a02d674eb23afee3f0169a725352cc42d54549ecdb031e8f59e87e6
+  sha256: fbbb1f8ade8e9affeaacd632bedc94ac898fb726516f2f5a86d1bfba947635f4
 
 build:
   number: 0
