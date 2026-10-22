@@ -13,20 +13,18 @@ source:
   sha256: fbbb1f8ade8e9affeaacd632bedc94ac898fb726516f2f5a86d1bfba947635f4
 
 build:
-  number: 0
+  number: 1
   script:
+    env:
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+      CARGO_PROFILE_RELEASE_LTO: fat
+      LIBGIT2_NO_VENDOR: "1"
     content:
       - if: unix
         then:
-          - export LIBGIT2_NO_VENDOR="true"
           - export PKG_CONFIG="$BUILD_PREFIX/bin/pkg-config"
-          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-          - cargo install --path git-cliff --bins --root "${PREFIX}" --locked
-          - rm $PREFIX/.crates2.json
-          - rm $PREFIX/.crates.toml
-      - if: win
-        then:
-          - dir %PREFIX%\Library\lib
+          - cargo auditable install --locked --no-track --bins --root ${{ PREFIX }} --path git-cliff
+        else:
           # NOTE: somehow the linker is looking for ssh2.lib and not libssh2.lib.
           # Using RUSTFLAGS with `-l libssh2` does not work so the only solution found
           # so far is to copy libssh2.lib to ssh2.lib.
@@ -34,35 +32,35 @@ build:
           # - https://github.com/conda-forge/git-cliff-feedstock/pull/23#issuecomment-2695470356
           # - https://github.com/conda-forge/git-cliff-feedstock/pull/26
           # - https://github.com/conda-forge/libssh2-feedstock/issues/55
-          - copy %PREFIX%\Library\lib\libssh2.lib %PREFIX%\Library\lib\ssh2.lib
-          - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml || exit 1
-          - cargo install --verbose --path git-cliff --bins --root %LIBRARY_PREFIX% --locked || exit 1
-          - del %LIBRARY_PREFIX%\.crates2.json || exit 1
-          - del %LIBRARY_PREFIX%\.crates.toml || exit 1
-          - del %PREFIX%\Library\lib\ssh2.lib || exit 1
+          - copy %LIBRARY_LIB%\libssh2.lib %LIBRARY_LIB%\ssh2.lib || exit 1
+          - cargo auditable install --locked --no-track --bins --root %LIBRARY_PREFIX% --path git-cliff || exit 1
+          - del %LIBRARY_LIB%\ssh2.lib || exit 1
+      - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
 requirements:
   build:
     - ${{ compiler('rust') }}
     - ${{ compiler('c') }}
-    - ${{ stdlib("c") }}
+    - ${{ stdlib('c') }}
     - pkg-config
     - cargo-bundle-licenses
+    - cargo-auditable
   host:
     - libgit2
     - libssh2
-    # to build against libgit2 we also need the pkgconfig files
-    # for zlib
+    # to build against libgit2 we also need the pkgconfig files for zlib
     - zlib
 
 tests:
   - script:
       - git-cliff --help
+      - git-cliff --version
   - package_contents:
       bin:
         - git-cliff
         - git-cliff-completions
         - git-cliff-mangen
+      strict: true
 
 about:
   summary: A highly customizable changelog generator
@@ -80,3 +78,4 @@ extra:
   recipe-maintainers:
     - hadim
     - orhun
+    - pavelzw
