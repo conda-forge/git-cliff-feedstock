@@ -22,6 +22,14 @@ build:
       - if: unix
         then:
           - export PKG_CONFIG="$BUILD_PREFIX/bin/pkg-config"
+          - if: build_platform != target_platform
+            then:
+              # cc-rs also applies the generic CFLAGS to host (build script) compilations,
+              # which breaks with target-only flags like `-mabi=lp64d` on riscv64.
+              # Restrict them to the target triple instead.
+              - export CFLAGS_${CARGO_BUILD_TARGET//-/_}="$CFLAGS"
+              - export CXXFLAGS_${CARGO_BUILD_TARGET//-/_}="$CXXFLAGS"
+              - unset CFLAGS CXXFLAGS
           - cargo auditable install --locked --no-track --bins --root ${{ PREFIX }} --path git-cliff
         else:
           # NOTE: somehow the linker is looking for ssh2.lib and not libssh2.lib.
