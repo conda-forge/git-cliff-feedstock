@@ -12,7 +12,7 @@ source:
   sha256: fbbb1f8ade8e9affeaacd632bedc94ac898fb726516f2f5a86d1bfba947635f4
 
 build:
-  number: 1
+  number: 2
   script:
     env:
       CARGO_PROFILE_RELEASE_STRIP: symbols
@@ -49,7 +49,7 @@ requirements:
     - ${{ compiler('rust') }}
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}
-    - pkg-config
+    - pkgconf
     - cargo-bundle-licenses
     - cargo-auditable
   host:
